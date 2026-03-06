@@ -15,6 +15,8 @@
 2. **Playwright + proxies** – lacnejšie (~$20-40/mes), vyžaduje údržbu
 3. **Facebook Graph API** – oficiálne, ale veľmi obmedzené pre verejné eventy
 
+![Architecture](architecture.svg)
+
 ## Spustenie
 
 ```bash
