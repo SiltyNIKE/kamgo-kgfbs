@@ -28,3 +28,29 @@ python main.py --mode live    # vyžaduje Apify API key
 - `mapper.py` – mapovanie FB eventu na Kamgo Event schému  
 - `categorizer.py` – AI kategorizácia cez OpenRouter/Claude
 - `dedup.py` – logika detekcie duplikátov
+
+---
+
+## Porovnanie scraping prístupov
+
+| | Apify | Playwright + Proxies | Facebook Graph API |
+|---|---|---|---|
+| **Cena** | ~$50-100/mes | ~$20-40/mes (proxies) | zadarmo |
+| **Spoľahlivosť** | ✅ vysoká | ⚠️ stredná | ❌ nízka |
+| **Údržba** | ✅ žiadna | ❌ pri každej zmene FB UI | ✅ žiadna |
+| **Škálovanie** | ✅ ľahké | ⚠️ ťažké | ❌ rate limits |
+| **Odporúčanie** | ✅ produkcia | PoC / nízky budget | ❌ nevhodné |
+
+### Prečo nie Facebook Graph API?
+
+FB Graph API bol kedysi ideálne riešenie, ale Meta ho postupne obmedzila:
+- Verejné eventy sú dostupné iba ak má aplikácia špeciálne schválenie (`pages_read_engagement`)
+- Schvaľovací proces trvá týždne a Meta ho často zamieta pre scraping účely
+- Rate limits sú veľmi prísne pre 4000 stránok
+- Mnohé polia (description, ticketUrl) nie sú dostupné bez pokročilých oprávnení
+
+### Playwright ako alternatíva
+
+Pozri `scraper_playwright.py` pre ukážku implementácie.
+Hlavná nevýhoda: FB aktívne detekuje headless prehliadače a blokuje IP.
+Riešenie vyžaduje rotating proxies a pravidelné aktualizácie pri zmene FB UI.
